@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
     flexDirection: 'row',
   },
-  dot: (index, currentIndex) => ({
+  dot: (index = 0, currentIndex = 0) => ({
     height: 5,
     width: 20,
     backgroundColor: index === currentIndex ? '#F9B023' : '#E4E4E4',

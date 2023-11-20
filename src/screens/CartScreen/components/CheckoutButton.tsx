@@ -1,9 +1,13 @@
 import React from 'react';
 import {TouchableOpacity, Text, StyleSheet} from 'react-native';
 
-const CheckoutButton = () => {
+const CheckoutButton = ({isCartEmpty = true}) => {
+  console.log(isCartEmpty);
   return (
-    <TouchableOpacity style={styles.container} activeOpacity={0.7}>
+    <TouchableOpacity
+      disabled={isCartEmpty}
+      style={styles.container(isCartEmpty)}
+      activeOpacity={0.7}>
       <Text style={styles.buttonText}>Proceed to Checkout</Text>
     </TouchableOpacity>
   );
@@ -12,14 +16,15 @@ const CheckoutButton = () => {
 export default CheckoutButton;
 
 const styles = StyleSheet.create({
-  container: {
+  container: (isCartEmpty = false) => ({
     padding: 20,
     backgroundColor: '#2A4BA0',
     borderRadius: 8,
     marginTop: 20,
     justifyContent: 'center',
     alignItems: 'center',
-  },
+    opacity: isCartEmpty ? 0.5 : 1,
+  }),
   buttonText: {
     fontSize: 14,
     fontWeight: '600',

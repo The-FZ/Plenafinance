@@ -25,7 +25,7 @@ const CheckoutSection = () => {
         <Text style={styles.leftText}>Total</Text>
         <Text style={styles.rightText}>$ {Subtotal + delivery}</Text>
       </View>
-      <CheckoutButton />
+      <CheckoutButton isCartEmpty={!cartData.length} />
     </View>
   );
 };

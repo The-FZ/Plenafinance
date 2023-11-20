@@ -11,7 +11,7 @@ const Header = () => {
       <View style={styles.addressContainer}>
         <View>
           <Text style={styles.title}>Delivery to</Text>
-          <Text style={styles.value}>Green way 3000, Sylhet </Text>
+          <Text style={styles.value}>Green way 3000, Sylhet</Text>
         </View>
         <View>
           <Text style={styles.title}>Within</Text>

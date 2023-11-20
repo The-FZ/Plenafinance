@@ -3,13 +3,14 @@ import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
+import {SCREENS} from '../../utils/constants';
 
 const Cart = ({color = '#000'}) => {
   const navigation = useNavigation();
   const CartData = useSelector(state => state?.cartData?.cartData);
 
   const navigateToCart = () => {
-    navigation.navigate('CartScreen');
+    navigation.navigate(SCREENS.CARTSCREEN);
   };
 
   return (

@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import {useSelector} from 'react-redux';
 import useHandleCart from '../hooks/useHandleCart';
+import {HOMESCREEN_CONSTANTS} from '../../../utils/constants';
 
 const AddToCart = ({item = {}}) => {
   const {handleDeleteItem, handleAddToCart} = useHandleCart();
@@ -19,9 +20,9 @@ const AddToCart = ({item = {}}) => {
       }
       style={styles.addToCart}>
       {index === -1 ? (
-        <Icon name="add" size={12} color="#fff" />
+        <Icon name={HOMESCREEN_CONSTANTS.ADD} size={12} color="#fff" />
       ) : (
-        <AntIcon name="delete" size={12} color="#fff" />
+        <AntIcon name={HOMESCREEN_CONSTANTS.DELETE} size={12} color="#fff" />
       )}
     </TouchableOpacity>
   );

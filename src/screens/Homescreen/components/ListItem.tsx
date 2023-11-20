@@ -11,6 +11,8 @@ import AntIcon from 'react-native-vector-icons/AntDesign';
 import AddToCart from './AddToCart';
 import {useNavigation} from '@react-navigation/native';
 import {EventRegister} from 'react-native-event-listeners';
+import {SCREENS} from '../../../utils/constants';
+
 const {width} = Dimensions.get('window');
 
 const ListItem = ({item = {}}) => {
@@ -29,7 +31,7 @@ const ListItem = ({item = {}}) => {
   }, []);
 
   const navigateToDetails = () => {
-    navigation.navigate('DetailsScreen', {
+    navigation.navigate(SCREENS.DETAILSSCREEN, {
       isFavourite,
       id: item.id,
     });

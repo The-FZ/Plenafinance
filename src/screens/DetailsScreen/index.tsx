@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, ActivityIndicator} from 'react-native';
+import {View, StyleSheet, ActivityIndicator, ScrollView} from 'react-native';
 import useFetchDetails from './hooks/useFetchDetails';
 import Header from './components/Header';
 import Rating from './components/Rating';
@@ -37,43 +37,45 @@ const DetailsScreen = ({route = {}, navigation = {}}) => {
   return (
     <View style={styles.container}>
       <Header />
-      <ItemTitle brand={details?.brand} title={details?.title} />
-      <Rating rating={details?.rating} />
-      <View style={styles.carouselContainer}>
-        <Carousel data={details?.images} />
-        <View style={styles.favourite}>
-          <Favourite
-            isFavourite={fav}
+      <ScrollView>
+        <ItemTitle brand={details?.brand} title={details?.title} />
+        <Rating rating={details?.rating} />
+        <View style={styles.carouselContainer}>
+          <Carousel data={details?.images} />
+          <View style={styles.favourite}>
+            <Favourite
+              isFavourite={fav}
+              onPress={() => {
+                fireEvent();
+              }}
+            />
+          </View>
+        </View>
+        <Price
+          price={details?.price}
+          discountPercentage={details?.discountPercentage}
+        />
+        <View style={styles.buttonContainer}>
+          <ButtonLG
+            type="primary"
+            text={index === -1 ? 'Add To Cart' : 'Go To Cart'}
             onPress={() => {
-              fireEvent();
+              index === -1
+                ? handleAddToCart({...details, quantity: 1})
+                : navigation.navigate('CartScreen');
+            }}
+          />
+          <ButtonLG
+            type="secondary"
+            text="Buy Now"
+            onPress={() => {
+              handleAddToCart({...details, quantity: 1});
+              navigation.navigate('CartScreen');
             }}
           />
         </View>
-      </View>
-      <Price
-        price={details?.price}
-        discountPercentage={details?.discountPercentage}
-      />
-      <View style={styles.buttonContainer}>
-        <ButtonLG
-          type="primary"
-          text={index === -1 ? 'Add To Cart' : 'Go To Cart'}
-          onPress={() => {
-            index === -1
-              ? handleAddToCart({...details, quantity: 1})
-              : navigation.navigate('CartScreen');
-          }}
-        />
-        <ButtonLG
-          type="secondary"
-          text="Buy Now"
-          onPress={() => {
-            handleAddToCart({...details, quantity: 1});
-            navigation.navigate('CartScreen');
-          }}
-        />
-      </View>
-      <Details details={details?.description} />
+        <Details details={details?.description} />
+      </ScrollView>
     </View>
   );
 };

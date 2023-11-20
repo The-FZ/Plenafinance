@@ -1,16 +1,16 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity, Text} from 'react-native';
-// import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 const Button = ({name = 'add', action = () => {}}) => {
-  let icon = <MaterialIcon name={name} size={20} color="#000" />;
+  let icon;
   if (name === 'subtract') {
     icon = <Text style={styles.decrease}>-</Text>;
-  }
-  if (name === 'delete') {
-    icon = <AntIcon name="delete" size={15} color="#000" />;
+  } else if (name === 'delete') {
+    icon = <AntIcon name={name} size={15} color="#000" />;
+  } else {
+    icon = <MaterialIcon name={name} size={20} color="#000" />;
   }
 
   return (
