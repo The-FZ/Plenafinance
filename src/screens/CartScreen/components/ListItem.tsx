@@ -1,5 +1,5 @@
-import {View, Text, StyleSheet} from 'react-native';
-import React from 'react';
+import React, {useRef} from 'react';
+import {View, Text, StyleSheet, Animated} from 'react-native';
 import ListImage from './ListImage';
 import Button from '../../../components/common/Button';
 import useHandleCart from '../../Homescreen/hooks/useHandleCart';
@@ -7,8 +7,29 @@ import useHandleCart from '../../Homescreen/hooks/useHandleCart';
 const ListItem = ({item = {}}) => {
   const {increase, decrease, deleteProduct} = useHandleCart();
 
+  const value = useRef(new Animated.Value(0)).current;
+  const deleteItem = () => {
+    Animated.timing(value, {
+      toValue: 1,
+      duration: 300,
+      useNativeDriver: true,
+    }).start(() => {
+      deleteProduct(item?.id);
+    });
+  };
+
   return (
-    <View style={styles.container}>
+    <Animated.View
+      style={[
+        styles.container,
+        {
+          opacity: value.interpolate({
+            inputRange: [0, 1],
+            outputRange: [1, 0],
+            extrapolate: 'clamp',
+          }),
+        },
+      ]}>
       <View style={[styles.flexRow, styles.flex1]}>
         <ListImage uri={item?.thumbnail} />
         <View style={styles.detailsContainer}>
@@ -19,14 +40,19 @@ const ListItem = ({item = {}}) => {
 
       <View style={styles.flexRow}>
         {item?.quantity === 1 ? (
-          <Button name="delete" action={() => deleteProduct(item?.id)} />
+          <Button
+            name="delete"
+            action={() => {
+              deleteItem();
+            }}
+          />
         ) : (
           <Button name="subtract" action={() => decrease(item?.id)} />
         )}
         <Text style={styles.quantity}>{item?.quantity}</Text>
         <Button name="add" action={() => increase(item?.id)} />
       </View>
-    </View>
+    </Animated.View>
   );
 };
 

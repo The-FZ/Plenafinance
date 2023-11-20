@@ -25,7 +25,9 @@ const ListItem = ({item = {}}) => {
 
   useEffect(() => {
     const event = EventRegister.addEventListener('favs', ({fav, id}) => {
-      if (item?.id === id) setIsFavourite(fav);
+      if (item?.id === id) {
+        setIsFavourite(fav);
+      }
     });
     return () => EventRegister.removeAllListeners(event);
   }, []);
