@@ -4,9 +4,15 @@ import ListImage from './ListImage';
 import Button from '../../../components/common/Button';
 import useHandleCart from '../../Homescreen/hooks/useHandleCart';
 
-const ListItem = ({item = {}}) => {
-  const {increase, decrease, deleteProduct} = useHandleCart();
-
+const ListItem = ({item = {}, buyNow = false}) => {
+  const {
+    increase,
+    decrease,
+    deleteProduct,
+    bumpBuyNowData,
+    decreaseBuyNow,
+    deleteBuyNow,
+  } = useHandleCart();
   const value = useRef(new Animated.Value(0)).current;
   const deleteItem = () => {
     Animated.timing(value, {
@@ -14,7 +20,7 @@ const ListItem = ({item = {}}) => {
       duration: 300,
       useNativeDriver: true,
     }).start(() => {
-      deleteProduct(item?.id);
+      buyNow ? deleteBuyNow() : deleteProduct(item?.id);
     });
   };
 
@@ -47,10 +53,16 @@ const ListItem = ({item = {}}) => {
             }}
           />
         ) : (
-          <Button name="subtract" action={() => decrease(item?.id)} />
+          <Button
+            name="subtract"
+            action={() => (buyNow ? decreaseBuyNow() : decrease(item?.id))}
+          />
         )}
         <Text style={styles.quantity}>{item?.quantity}</Text>
-        <Button name="add" action={() => increase(item?.id)} />
+        <Button
+          name="add"
+          action={() => (buyNow ? bumpBuyNowData() : increase(item?.id))}
+        />
       </View>
     </Animated.View>
   );

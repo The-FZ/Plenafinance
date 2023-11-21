@@ -4,9 +4,10 @@ import {useSelector} from 'react-redux';
 import {calculateTotal} from '../../../utils';
 import CheckoutButton from './CheckoutButton';
 
-const CheckoutSection = () => {
+const CheckoutSection = ({buyNow = false}) => {
   const cartData = useSelector(state => state?.cartData?.cartData);
-  const Subtotal = calculateTotal(cartData);
+  const buyNowData = useSelector(state => state?.cartData?.buyNowData);
+  const Subtotal = calculateTotal(buyNow ? buyNowData : cartData);
   const delivery = 2;
 
   return (
@@ -25,7 +26,9 @@ const CheckoutSection = () => {
         <Text style={styles.leftText}>Total</Text>
         <Text style={styles.rightText}>$ {Subtotal + delivery}</Text>
       </View>
-      <CheckoutButton isCartEmpty={!cartData.length} />
+      <CheckoutButton
+        isCartEmpty={buyNow ? !buyNowData.length : !cartData.length}
+      />
     </View>
   );
 };

@@ -10,7 +10,7 @@ const Cart = ({color = '#000'}) => {
   const CartData = useSelector(state => state?.cartData?.cartData);
 
   const navigateToCart = () => {
-    navigation.navigate(SCREENS.CARTSCREEN);
+    navigation.navigate(SCREENS.CARTSCREEN, {buy_now: false});
   };
 
   return (

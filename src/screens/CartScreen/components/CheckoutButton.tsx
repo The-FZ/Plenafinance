@@ -2,7 +2,6 @@ import React from 'react';
 import {TouchableOpacity, Text, StyleSheet} from 'react-native';
 
 const CheckoutButton = ({isCartEmpty = true}) => {
-  console.log(isCartEmpty);
   return (
     <TouchableOpacity
       disabled={isCartEmpty}

@@ -12,12 +12,13 @@ import {useSelector} from 'react-redux';
 import Favourite from '../../components/common/Favourite';
 import {EventRegister} from 'react-native-event-listeners';
 import Carousel from '../../components/common/Carousel';
+import {SCREENS} from '../../utils/constants';
 
 const DetailsScreen = ({route = {}, navigation = {}}) => {
   const cartData = useSelector(state => state?.cartData?.cartData);
   const {isFavourite, id} = route?.params;
   const {details} = useFetchDetails(id);
-  const {handleAddToCart} = useHandleCart();
+  const {handleAddToCart, buyNow} = useHandleCart();
   let index = cartData.findIndex(i => i.id === id);
   const [fav, setFav] = useState(isFavourite);
 
@@ -62,15 +63,15 @@ const DetailsScreen = ({route = {}, navigation = {}}) => {
             onPress={() => {
               index === -1
                 ? handleAddToCart({...details, quantity: 1})
-                : navigation.navigate('CartScreen');
+                : navigation.navigate(SCREENS.CARTSCREEN, {buy_now: false});
             }}
           />
           <ButtonLG
             type="secondary"
             text="Buy Now"
             onPress={() => {
-              handleAddToCart({...details, quantity: 1});
-              navigation.navigate('CartScreen');
+              buyNow({...details, quantity: 1});
+              navigation.navigate(SCREENS.CARTSCREEN, {buy_now: true});
             }}
           />
         </View>

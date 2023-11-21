@@ -5,6 +5,10 @@ import {
   decreaseQuantity,
   removeItemFromCart,
   storeCartData,
+  addToBuyNow,
+  increaseBuyNowQuantity,
+  decreaseBuyNowQuantity,
+  deleteBuyNowData,
 } from '../../../redux/reducers/cartReducer';
 
 const useHandleCart = () => {
@@ -40,7 +44,35 @@ const useHandleCart = () => {
     [dispatch],
   );
 
-  return {increase, decrease, deleteProduct, handleAddToCart, handleDeleteItem};
+  const buyNow = useCallback(
+    item => {
+      dispatch(addToBuyNow(item));
+    },
+    [dispatch],
+  );
+  const bumpBuyNowData = useCallback(() => {
+    dispatch(increaseBuyNowQuantity());
+  }, [dispatch]);
+
+  const decreaseBuyNow = useCallback(() => {
+    dispatch(decreaseBuyNowQuantity());
+  }, [dispatch]);
+
+  const deleteBuyNow = useCallback(() => {
+    dispatch(deleteBuyNowData());
+  }, [dispatch]);
+
+  return {
+    increase,
+    decrease,
+    deleteProduct,
+    handleAddToCart,
+    handleDeleteItem,
+    buyNow,
+    bumpBuyNowData,
+    decreaseBuyNow,
+    deleteBuyNow
+  };
 };
 
 export default useHandleCart;

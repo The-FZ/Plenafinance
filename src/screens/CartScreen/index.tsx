@@ -5,11 +5,13 @@ import {useSelector} from 'react-redux';
 import ListItem from './components/ListItem';
 import CheckoutSection from './components/CheckoutSection';
 
-const CartScreen = () => {
+const CartScreen = ({route}) => {
   const cartData = useSelector(state => state?.cartData?.cartData);
+  const buyNowData = useSelector(state => state?.cartData?.buyNowData);
+  const {buy_now = false} = route.params;
 
   const renderItem = ({item}) => {
-    return <ListItem item={item} />;
+    return <ListItem item={item} buyNow={buy_now} />;
   };
 
   const renderItemSeperator = () => {
@@ -21,17 +23,18 @@ const CartScreen = () => {
       <View style={styles.headerContainer}>
         <BackButton />
         <Text style={styles.headerTitle}>
-          Shopping Cart ( {`${cartData.length}`} )
+          Shopping Cart (
+          {buy_now ? ` ${buyNowData.length}` : `${cartData.length}`} )
         </Text>
       </View>
       <FlatList
         contentContainerStyle={styles.list}
-        data={cartData}
+        data={buy_now ? buyNowData : cartData}
         keyExtractor={item => item?.id + ''}
         renderItem={renderItem}
         ItemSeparatorComponent={renderItemSeperator}
       />
-      <CheckoutSection />
+      <CheckoutSection buyNow={buy_now} />
     </View>
   );
 };

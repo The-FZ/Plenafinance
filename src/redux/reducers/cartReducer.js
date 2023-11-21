@@ -5,6 +5,7 @@ export const cartReducer = createSlice({
 	name: 'cart',
 	initialState: {
 		cartData: [],
+		buyNowData: [],
 	},
 	reducers: {
 		storeCartData: (state, actions) => {
@@ -28,9 +29,21 @@ export const cartReducer = createSlice({
 			let index = state.cartData.findIndex(item => item.id === actions.payload);
 			state.cartData[index].quantity = state.cartData[index].quantity - 1;
 		},
+		addToBuyNow: (state, actions) => {
+			state.buyNowData = [actions.payload];
+		},
+		increaseBuyNowQuantity: (state) => {
+			state.buyNowData[0].quantity = state.buyNowData[0].quantity + 1;
+		},
+		decreaseBuyNowQuantity: (state) => {
+			state.buyNowData[0].quantity = state.buyNowData[0].quantity - 1;
+		},
+		deleteBuyNowData: (state) => {
+			state.buyNowData = [];
+		}
 	},
 });
 
-export const { storeCartData, removeItemFromCart, increaseQuantity, decreaseQuantity } = cartReducer.actions;
+export const { storeCartData, removeItemFromCart, increaseQuantity, decreaseQuantity, addToBuyNow, increaseBuyNowQuantity, decreaseBuyNowQuantity, deleteBuyNowData } = cartReducer.actions;
 
 export default cartReducer.reducer;
